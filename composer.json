@@ -1,0 +1,24 @@
+{
+	"name": "arc/curl",
+	"type": "library",
+	"description": "Ariadne Component Library: Curl http client",
+	"keywords": ["component","components"],
+	"homepage": "https://github.com/Ariadne-CMS/arc/wiki",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Robbert Müller",
+			"email": "robbert@muze.nl"
+		}
+	],
+	"require": {
+		"php": ">=5.4",
+		"ext-curl": "*",
+		"arc/web": "~1.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"arc\\": "src/"
+		}
+	}
+}
