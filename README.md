@@ -1,11 +1,12 @@
 ARC: Ariadne Component Library
 =========================
 
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Ariadne-CMS/arc-curl/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Ariadne-CMS/arc-curl/?branch=master)
-[![Latest Stable Version](https://poser.pugx.org/arc/curl/v/stable.svg)](https://packagist.org/packages/arc/curl)
-[![Total Downloads](https://poser.pugx.org/arc/curl/downloads.svg)](https://packagist.org/packages/arc/curl)
-[![Latest Unstable Version](https://poser.pugx.org/arc/curl/v/unstable.svg)](https://packagist.org/packages/arc/curl)
-[![License](https://poser.pugx.org/arc/curl/license.svg)](https://packagist.org/packages/arc/curl)
+[![Build Status](https://travis-ci.org/mjrider/arc-curl.svg?branch=master)][arc-travis]
+[![Latest Stable Version](https://poser.pugx.org/arc/curl/v/stable.svg)][arc-packagist]
+[![Total Downloads](https://poser.pugx.org/arc/curl/downloads.svg)][arc-packagist]
+[![Latest Unstable Version](https://poser.pugx.org/arc/curl/v/unstable.svg)][arc-packagist]
+[![License](https://poser.pugx.org/arc/curl/license.svg)][arc-packagist]
+
 
 A flexible component library for PHP 5.4+
 -----------------------------------------
