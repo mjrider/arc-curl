@@ -57,19 +57,20 @@ class ClientCurl implements ClientInterface
         $this->responseHeaders = null;
         $this->requestHeaders = null;
 
+        // TODO: set https validation to on
+        // TODO: discover caert.pem if not set
+
         $curloptions = array(
             CURLINFO_HEADER_OUT => true,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_URL => $url,
             CURLOPT_HEADER => true,
             CURLOPT_CUSTOMREQUEST => $type, // GET POST PUT PATCH DELETE HEAD OPTIONS
         );
 
-        // TODO: set https validation to on
-        // TODO: discover caert.pem if not set
 
         if ($type == 'GET' ) {
             if ( $request) {
+                print "Wheeeeee\n";
                 $url = $this->buildURL( $url, $request );
                 $request = '';
             }
@@ -79,6 +80,7 @@ class ClientCurl implements ClientInterface
                 $curloptions[CURlPOSTFIELDS] = $request;
             }
         }
+        $curloptions[CURLOPT_URL] = $url;
 
         $options = $this->mergeOptions( array(
             'method' => $type,
@@ -119,7 +121,7 @@ class ClientCurl implements ClientInterface
         $result = substr($result, $header_size);
 
         $headers = explode("\n",$header);
-        array_walk($headers, function(&$value, $userdata = null) {
+        array_walk($headers, function(&$value) {
             $value = rtrim($value,"\r");
         });
         $this->responseHeaders = $headers;
