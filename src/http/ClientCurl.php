@@ -70,7 +70,6 @@ class ClientCurl implements ClientInterface
 
         if ($type == 'GET') {
             if ($request) {
-                print "Wheeeeee\n";
                 $url = $this->buildURL( $url, $request );
                 $request = '';
             }
