@@ -18,3 +18,7 @@ Application Framework and Content Management System
 arc/curl contains
 ------------------
 - http: simple curl based http client, tries to be a dropin replacement for the arc/web ClientStream
+
+[arc-travis]: https://travis-ci.org/mjrider/arc-curl
+[arc-packagist]: https://packagist.org/packages/arc/curl
+
