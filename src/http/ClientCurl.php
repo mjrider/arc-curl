@@ -68,15 +68,15 @@ class ClientCurl implements ClientInterface
         );
 
 
-        if ($type == 'GET' ) {
-            if ( $request) {
+        if ($type == 'GET') {
+            if ($request) {
                 print "Wheeeeee\n";
                 $url = $this->buildURL( $url, $request );
                 $request = '';
             }
         } else {
-            $curloptions[CURLOPT_CUSTOMREQUEST]= $type;
-            if( $request ) {
+            $curloptions[CURLOPT_CUSTOMREQUEST] = $type;
+            if($request) {
                 $curloptions[CURlPOSTFIELDS] = $request;
             }
         }
@@ -92,7 +92,7 @@ class ClientCurl implements ClientInterface
             $options['header'] = false;
         }
 
-        if ( count($options['headers'])) {
+        if (count($options['headers'])) {
             $curloptions[CURLOPT_HTTPHEADER] = $options['headers'];
         }
 
@@ -120,9 +120,9 @@ class ClientCurl implements ClientInterface
         $header = substr($result, 0, $header_size);
         $result = substr($result, $header_size);
 
-        $headers = explode("\n",$header);
+        $headers = explode("\n", $header);
         array_walk($headers, function(&$value) {
-            $value = rtrim($value,"\r");
+            $value = rtrim($value, "\r");
         });
         $this->responseHeaders = $headers;
         $requestHeaders = curl_getinfo($ch, CURLINFO_HEADER_OUT);
