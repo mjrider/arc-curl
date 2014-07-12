@@ -61,6 +61,7 @@ class ClientCurl implements ClientInterface
             CURLINFO_HEADER_OUT => true,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_URL => $url,
+            CURLOPT_HEADER => true,
             CURLOPT_CUSTOMREQUEST => $type, // GET POST PUT PATCH DELETE HEAD OPTIONS
         );
 
@@ -112,9 +113,18 @@ class ClientCurl implements ClientInterface
         curl_setopt_array( $ch, $curloptions);
 
         $result = curl_exec($ch);
-        // TODO: extract http response headers
-        $this->responseHeaders = array();
-        $this->requestHeaders = curl_getinfo($ch, CURLINFO_HEADER_OUT);
+
+        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+        $header = substr($result, 0, $header_size);
+        $result = substr($result, $header_size);
+
+        $headers = explode("\n",$header);
+        array_walk($headers, function(&$value, $userdata = null) {
+            $value = rtrim($value,"\r");
+        });
+        $this->responseHeaders = $headers;
+        $requestHeaders = curl_getinfo($ch, CURLINFO_HEADER_OUT);
+        $this->requestHeaders = rtrim($requestHeaders,"\r\n")."\r\n";
 
         return $result;
     }
