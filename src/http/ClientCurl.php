@@ -52,6 +52,60 @@ class ClientCurl implements ClientInterface
         return $url;
     }
 
+    protected function streamToCurlOptions($options, $curloptions) {
+        /* FIXME: parse stream httpcontext options
+            - method -- not needed
+            - header -- done
+            - user_agent -- done
+            - content -- not needed
+            - proxy -- todo
+            - request_fulluri -- todo
+            - follow_location -- done
+            - max_redirects -- done
+            - protocol_version -- done
+            - timeout -- done
+            - ignore_errors -- done
+        */
+        if (count($options['headers'])) {
+            $curloptions[CURLOPT_HTTPHEADER] = $options['headers'];
+        }
+
+        if (isset($options['user_agent'])){
+            $curloptions[CURLOPT_USERAGENT] = $options['user_agent'];
+        }
+
+        /*
+            TODO: parse proxy url in seperate settings
+            URI specifying address of proxy server. (e.g. tcp://proxy.example.com:5100).
+            what kind of proxies does the stream api support?
+        if (isset($options['proxy'])){
+            $curloptions[] = $options['proxy'];
+        }
+         */
+
+        if (isset($options['follow_location'])){
+            $curloptions[CURLOPT_FOLLOWLOCATION] = $options['follow_location'];
+        }
+        if (isset($options['max_redirects'])){
+            $curloptions[CURLOPT_MAXREDIRS] = $options['max_redirects'];
+        }
+        if (isset($options['protocol_version'])){
+            if( $options['protocol_version'] == 1.0 ) {
+                $curloptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0 ;
+            } else if( $options['protocol_version'] == 1.1 ) {
+                $curloptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
+            }
+        }
+        if (isset($options['timeout'])){
+            $curloptions[CURLOPT_TIMEOUT_MS] = (int)(1000 * $options['timeout']);
+        }
+        if (isset($options['ignore_errors'])){
+            $curloptions[CURLOPT_FAILONERROR] = !$options['ignore_errors'];
+        }
+
+        return $curloptions;
+    }
+
     public function request( $type, $url, $request = null, $options = array() )
     {
         $this->responseHeaders = null;
@@ -66,7 +120,6 @@ class ClientCurl implements ClientInterface
             CURLOPT_HEADER => true,
             CURLOPT_CUSTOMREQUEST => $type, // GET POST PUT PATCH DELETE HEAD OPTIONS
         );
-
 
         if ($type == 'GET') {
             if ($request) {
@@ -91,23 +144,7 @@ class ClientCurl implements ClientInterface
             $options['header'] = false;
         }
 
-        if (count($options['headers'])) {
-            $curloptions[CURLOPT_HTTPHEADER] = $options['headers'];
-        }
-
-        /* FIXME: parse stream httpcontext options
-            - method -- not needed
-            - header -- done
-            - user_agent
-            - content -- not needed
-            - proxy
-            - request_fulluri
-            - follow_location
-            - max_redirects
-            - protocol_version
-            - timeout
-            - ignore_errors
-        */
+        $curloptions = $this->streamToCurlOptions($options, $curloptions);
 
         // Compose querry
         $ch = curl_init();
