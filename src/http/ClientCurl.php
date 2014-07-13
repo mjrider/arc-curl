@@ -66,7 +66,8 @@ class ClientCurl implements ClientInterface
             - timeout -- done
             - ignore_errors -- done
         */
-        if (count($options['headers'])) {
+        if (count($options['headers']))
+        {
             $curloptions[CURLOPT_HTTPHEADER] = $options['headers'];
         }
 
@@ -83,23 +84,30 @@ class ClientCurl implements ClientInterface
         }
          */
 
-        if (isset($options['follow_location'])){
+        if (isset($options['follow_location']))
+        {
             $curloptions[CURLOPT_FOLLOWLOCATION] = $options['follow_location'];
         }
-        if (isset($options['max_redirects'])){
+        if (isset($options['max_redirects']))
+        {
             $curloptions[CURLOPT_MAXREDIRS] = $options['max_redirects'];
         }
-        if (isset($options['protocol_version'])){
-            if( $options['protocol_version'] == 1.0 ) {
-                $curloptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0 ;
-            } else if( $options['protocol_version'] == 1.1 ) {
+        if (isset($options['protocol_version']))
+        {
+            if ($options['protocol_version'] == 1.0)
+            {
+                $curloptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_0;
+            } else if ($options['protocol_version'] == 1.1)
+            {
                 $curloptions[CURLOPT_HTTP_VERSION] = CURL_HTTP_VERSION_1_1;
             }
         }
-        if (isset($options['timeout'])){
-            $curloptions[CURLOPT_TIMEOUT_MS] = (int)(1000 * $options['timeout']);
+        if (isset($options['timeout']))
+        {
+            $curloptions[CURLOPT_TIMEOUT_MS] = (int) (1000 * $options['timeout']);
         }
-        if (isset($options['ignore_errors'])){
+        if (isset($options['ignore_errors']))
+        {
             $curloptions[CURLOPT_FAILONERROR] = !$options['ignore_errors'];
         }
 
