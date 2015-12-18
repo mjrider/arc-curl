@@ -11,7 +11,7 @@
 
 namespace arc\http;
 
-class ClientCurl implements ClientInterface
+class ClientCurl implements Client
 {
     private $options = array('headers' => array());
 
