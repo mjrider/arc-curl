@@ -37,8 +37,8 @@
             $client = new \arc\http\ClientCurl();
             $res = $client->get('http://www.ariadne-cms.org/');
 
-            $this->assertTrue( $res != '');
-            $this->assertTrue ($client->responseHeaders[0] == 'HTTP/1.1 200 OK');
+            $this->assertNotEquals($res, '');
+            $this->assertEquals($client->responseHeaders[0],'HTTP/1.1 200 OK');
         }
 
         function testHeader()
@@ -60,6 +60,7 @@
         {
             $client = new \arc\http\ClientCurl();
             $page = $client->get('afeafawfafweaga');
+            var_dump($page);
             $this->assertFalse($page);
         }
 
@@ -72,6 +73,6 @@
 
             $res2 = $client->get('invalid');
             $resHeader2 = $client->responseHeaders;
-            $this->assertTrue($resHeader1 !== $resHeader2);
+            $this->assertNotEquals($resHeader1,$resHeader2);
         }
     }
