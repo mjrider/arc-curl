@@ -159,18 +159,20 @@ class ClientCurl implements Client
         curl_setopt_array( $ch, $curloptions);
 
         $result = curl_exec($ch);
+        if ( $result !== false ) {
 
-        $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
-        $header = substr($result, 0, $header_size);
-        $result = substr($result, $header_size);
+            $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+            $header = substr($result, 0, $header_size);
+            $result = substr($result, $header_size);
 
-        $headers = explode("\n", $header);
-        array_walk($headers, function(&$value) {
-            $value = rtrim($value, "\r");
-        });
-        $this->responseHeaders = $headers;
-        $requestHeaders = curl_getinfo($ch, CURLINFO_HEADER_OUT);
-        $this->requestHeaders = rtrim($requestHeaders,"\r\n")."\r\n";
+            $headers = explode("\n", $header);
+            array_walk($headers, function(&$value) {
+                $value = rtrim($value, "\r");
+            });
+            $this->responseHeaders = $headers;
+            $requestHeaders = curl_getinfo($ch, CURLINFO_HEADER_OUT);
+            $this->requestHeaders = rtrim($requestHeaders,"\r\n")."\r\n";
+        }
 
         return $result;
     }
