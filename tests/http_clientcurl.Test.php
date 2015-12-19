@@ -60,7 +60,6 @@
         {
             $client = new \arc\http\ClientCurl();
             $page = $client->get('afeafawfafweaga');
-            var_dump($page);
             $this->assertFalse($page);
         }
 
